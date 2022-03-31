@@ -1,8 +1,9 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
-
+  before_action :current_user
+  skip_before_action :login_required, only: [:new, :create]
   def index
-    @tasks = Task.all
+    @tasks = Task.where(user_id: current_user.id)
   end
 
   def new
@@ -11,14 +12,25 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    if @task.save
-      redirect_to tasks_path, notice: t('.created')
-    else
-      render :new
+    @task.user_id = current_user.id
+
+    respond_to do |format|
+      if @task.save
+        format.html { redirect_to @task, notice: 'Task was successfully created.' }
+        format.json { render :show, status: :created, location: @task }
+      else
+        format.html { render :new }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   def show
+    if current_user.id != @task.user_id
+      flash[:notice] = "Not Allowed!"
+      redirect_to tasks_path(session[:task_user])
+      return
+    end
   end
 
   def edit
