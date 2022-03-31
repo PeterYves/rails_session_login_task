@@ -16,7 +16,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to @task, notice: 'Task was successfully created.' }
+        format.html { redirect_to @task, notice: 'You have registered a task' }
         format.json { render :show, status: :created, location: @task }
       else
         format.html { render :new }
@@ -38,7 +38,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to tasks_path, notice: t('.updated')
+      redirect_to tasks_path, notice: 'The task has been updated'
     else
       render :edit
     end
@@ -46,7 +46,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    redirect_to tasks_path, notice: t('.destroyed')
+    redirect_to tasks_path, notice: 'Task has been deleted'
   end
 
   private
