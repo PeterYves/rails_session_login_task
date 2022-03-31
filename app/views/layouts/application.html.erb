@@ -11,14 +11,13 @@
 
   <body>
   <% if logged_in? %>
-    <li><%= link_to "タスク一覧", tasks_path %></li>
-    <li><%= link_to "タスクを登録する", new_task_path %></li>
-    <li><%= link_to "タスク一覧", tasks_path %></li>
-    <li><%= link_to "アカウント", user_path(current_user.id) %></li>
-    <li><%= link_to "ログアウト", session_path(current_user.id), method: :delete %></li>
+    <li><%= link_to "Task list", tasks_path, id: "tasks-index" %></li>
+    <li><%= link_to "Register a task", new_task_path, id: "new-task" %></li>
+    <li><%= link_to "Account", user_path(current_user.id), id: "my-account" %></li>
+    <li><%= link_to "Logout", session_path(current_user.id), method: :delete, id: "sign-out" %></li>
     <% else %>
-    <li><%= link_to "アカウント登録", new_user_path %></li>
-    <li><%= link_to "ログイン", new_session_path %></li>
+    <li><%= link_to "Register Account", new_user_path, id: "sign-up" %></li>
+    <li><%= link_to "Login", new_session_path, id: "sign-in" %></li>
 <% end %>
     <p id="notice"><%= notice %></p>
     <%= yield %>

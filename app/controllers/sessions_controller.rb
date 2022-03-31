@@ -8,14 +8,14 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to tasks_path
     else
-      flash.now[:danger] = "I failed to login"
+      flash.now[:danger] = "You have an incorrect email address or password"
       render :new
     end
   end
   def destroy
     # deletes user session
     session[:user_id] = nil
-    redirect_to root_path, notice: 'Logged Out'
+    redirect_to root_path, notice: 'You are logged out'
   end
   private
    def user_params

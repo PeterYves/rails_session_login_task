@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   def destroy
     User.find(params[:id]).destroy
     session[:user_id] = nil
-    redirect_to new_user_path
+    redirect_to new_session_path
   end
   def new
     @user = User.new
@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in(@user)
-      redirect_to tasks_path
+      redirect_to tasks_path, notice: "You have registered your account"
     else
       render :new
     end
@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-        redirect_to user_path(@user.id), notice: "Account has successfully edited"
+        redirect_to user_path(@user.id), notice: "You have updated your account"
     else
         flash.now[:danger] = "Account is failed to edit"
         render :edit
